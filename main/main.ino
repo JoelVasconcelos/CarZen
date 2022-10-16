@@ -21,7 +21,7 @@ bool SensorRight = 0;
 #define maxDistance 14
 
 
-bool direction = 0;
+char direction = 'f';
 long time = 0;
 
 
@@ -81,7 +81,7 @@ void DownPlatform(){
 }
 
 void CheckColor(){
-    if(SensorLeft == 1){ //Cor for vermelho 
+    if(SensorLeft == 1 && ){ //Cor for vermelho 
 
       if(time < millis()){
         UpPlatform();
