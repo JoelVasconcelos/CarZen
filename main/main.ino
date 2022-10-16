@@ -67,8 +67,10 @@ void Move(){
   if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
     if(direction == 'f')
       MoveFront();
-    else
+    else if(direction == 'b')
       MoveBack();
+    else
+      break;
   }
   
   if((SensorLeft == 0) && (SensorRight == 1)){ // Se detectar o lado branco na esquerda e o lado preto na direita
