@@ -5,12 +5,15 @@ void setupEngine(){  // Faz as configuração para a utilização das funções 
       pinMode(M2R, OUTPUT);
       pinMode(PwmM1, OUTPUT);
       pinMode(PwmM2, OUTPUT);
-
+      pinMode(Up, OUTPUT);
+      pinMode(Down, OUTPUT);
 
       digitalWrite(M1D, LOW);
       digitalWrite(M1R, LOW);
       digitalWrite(M2D, LOW);
       digitalWrite(M2R, LOW);
+      digitalWrite(Up, LOW);
+      digitalWrite(Down, LOW);
 }
     
 void startEngine(uint8_t motor, uint8_t pwm){
@@ -70,6 +73,16 @@ void engineON(uint8_t directM1, uint8_t directM2) {
 }
 
 void testEngines() {
+
+  digitalWrite(Up, HIGH);
+  delay(1500);
+  digitalWrite(Up, LOW);
+  delay(1500);
+  digitalWrite(Down, HIGH);
+  delay(1500);
+  digitalWrite(Down, LOW);
+  delay(1500);
+
   // Move para frente
   MoveFront();
   delay(1500);

@@ -10,6 +10,10 @@
 #define PwmM1 5
 #define PwmM2 6
 
+// Definicao dos pinos da plataforma
+#define Up 12
+#define Down 13
+
 //Definição dos pinos dos sensores
 #define pinS1 10
 #define pinS2 11
@@ -24,6 +28,24 @@ int time = 0;
 
 NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
+void setup() {
+
+  setupEngine();
+  // put your setup code here, to run once:
+
+  pinMode(pinS1, INPUT);
+  pinMode(pinS2, INPUT);
+}
+
+void loop() {
+
+  testEngines();
+
+  // put your main code here, to run repeatedly:
+  CheckObstacle();
+  Move();
+  CheckColor();
+}
 
 void MoveFront() {
   engineON(2,2); // Move para frente atravez dos dois parametros definidos como 2
@@ -58,15 +80,6 @@ void CheckObstacle(){
 
 }
 
-void setup() {
-
-  setupEngine();
-  // put your setup code here, to run once:
-
-  pinMode(pinS1, INPUT);
-  pinMode(pinS2, INPUT);
-}
-
 void UpPlatform(){
   
 }
@@ -81,12 +94,3 @@ void CheckColor(){
     }
 }
 
-void loop() {
-
-  testEngines();
-
-  // put your main code here, to run repeatedly:
-  CheckObstacle();
-  Move();
-  CheckColor();
-}
