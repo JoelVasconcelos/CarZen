@@ -84,19 +84,6 @@ void CheckObstacle(){
 
 }
 
-<<<<<<< HEAD
-void setup() {
-
-  setupEngine();
-  // put your setup code here, to run once:
-  Timer1.inicialize()
-
-  pinMode(pinS1, INPUT);
-  pinMode(pinS2, INPUT);
-}
-
-=======
->>>>>>> 509b2f287122144265d69805812e49ae6be2ecda
 void UpPlatform(){
   
 }
