@@ -94,7 +94,7 @@ void DownPlatform(){
 
 void CheckColor(){
   if(SensorLeft == 1){ //Cor for vermelho 
-    if(!isUP){
+    if(!isUp){
       time = millis() + 5000;    
     }
     if(time > millis()){
