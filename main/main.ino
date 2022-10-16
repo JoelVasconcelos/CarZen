@@ -1,3 +1,4 @@
+#include <NewPing.h>
 
 // Definição dos pinos dos motores
 #define D 2
@@ -10,16 +11,18 @@
 #define PwmM2 6
 
 //Definição dos pinos dos sensores
-#define pinS1 7
-#define pinS2 6
+#define pinS1 10
+#define pinS2 11
 bool SensorLeft = 0;
 bool SensorRight = 0;
-#define pinTrigger 
-#define pinEcho
-#define maxDistance 
+#define pinTrigger  12
+#define pinEcho 13
+#define maxDistance 14
 
 bool direction = 0;
 int time = 0;
+
+NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
 
 void MoveFront() {
@@ -48,7 +51,7 @@ void Move(){
   }
 }
 
-CheckObstacle(){
+void CheckObstacle(){
   while(sonar.ping_cm() == 10){
     //Parar
   }
@@ -67,15 +70,20 @@ void setup() {
 void UpPlatform(){
   
 }
+
+void DownPlatform(){
+  
+}
+
 void CheckColor(){
-    if(){ //Cor for vermelho 
+    if(SensorLeft == 1){ //Cor for vermelho 
 
     }
 }
 
 void loop() {
-  engineON(2, 2);
-  delay(5000);
+
+  testEngines();
 
   // put your main code here, to run repeatedly:
   CheckObstacle();

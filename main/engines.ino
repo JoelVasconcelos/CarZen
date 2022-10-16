@@ -12,8 +12,7 @@ void setupEngine(){  // Faz as configuração para a utilização das funções 
       digitalWrite(M2D, LOW);
       digitalWrite(M2R, LOW);
 }
-
-            
+    
 void startEngine(uint8_t motor, uint8_t pwm){
   int i = pwm*.3;
   while (i <= pwm) {
@@ -24,7 +23,7 @@ void startEngine(uint8_t motor, uint8_t pwm){
   }
 }
 
-void engineOFF(int motor){ 
+void engineOFF(){ 
 
       digitalWrite(M1D, LOW);
       digitalWrite(M1R, LOW);
@@ -52,7 +51,7 @@ void engineON(uint8_t directM1, uint8_t directM2) {
         } else{
             digitalWrite(M1R, LOW);
         }
-// ---------------------------------------
+  // ---------------------------------------
         if(directM2 == 2) {
             digitalWrite(M2D, HIGH);
             analogWrite(PwmM2, pwm);
@@ -68,4 +67,34 @@ void engineON(uint8_t directM1, uint8_t directM2) {
         } else {
             digitalWrite(M2R, LOW);
         }
+}
+
+void testEngines() {
+  // Move para frente
+  MoveFront();
+  delay(1500);
+  engineOFF();
+
+  delay(2000);
+
+  // Move para tras
+  MoveBack();
+  delay(1500);
+  engineOFF();
+
+  delay(2000);
+
+  // Move para o lado direito 
+  engineON(2, 3);
+  delay(1500);
+  engineOFF();
+
+  delay(2000);
+
+  // Move para o lado esquerdo
+  engineON(3, 2);
+  delay(1500);
+  engineOFF();
+
+  delay(2000);
 }
