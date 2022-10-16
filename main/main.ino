@@ -12,8 +12,8 @@
 //Definição dos pinos dos sensores
 #define pinS1 7
 #define pinS2 6
-bool Sensor1 = 0;
-bool Sensor2 = 0;
+bool SensorLeft = 0;
+bool SensorRight = 0;
 #define pinTrigger 
 #define pinEcho
 #define maxDistance 
@@ -23,33 +23,31 @@ int time = 0;
 
 
 void MoveFront() {
-
-
+  engineON(2,2); // Move para frente atravez dos dois parametros definidos como 2
 }
 
 void MoveBack() {
-
-
+  engineON(3,3); // Move para frente atravez dos dois parametros definidos como 2
 }
 
 void Move(){
 
-  Sensor1 = digitalRead(pinS1);
-  Sensor2 = digitalRead(pinS2);
+  SensorLeft = digitalRead(pinS1);
+  SensorRight = digitalRead(pinS2);
 
-  if((Sensor1 == 0) && (Sensor2 == 0)){ // Se detectar na extremidade das faixas duas cores brancas
-    
-    
-  }
-  if((Sensor1 == 1) && (Sensor2 == 0)){ // Se detectar um lado preto e o outro branco
-
-  }
-  if((Sensor1 == 0) && (Sensor2 == 1)){ // Se detectar um lado branco e o outro preto
-
+  if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
+    MoveFront();
   }
   
-
+  if((SensorLeft == 0) && (SensorRight == 1)){ // Se detectar o lado branco na esquerda e o lado preto na direita
+    engineON(2, 3);
+  }
+  
+  if((SensorLeft == 1) && (SensorRight == 0)){ // Se detectar o lado preto na esquerda e o lado branco na direita
+    engineON(3, 2);
+  }
 }
+
 CheckObstacle(){
   while(sonar.ping_cm() == 10){
     //Parar
