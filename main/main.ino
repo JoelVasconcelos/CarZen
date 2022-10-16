@@ -65,7 +65,7 @@ void Move(){
   SensorRight = digitalRead(pinS2);
 
   if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
-    if(direction = 'f')
+    if(direction == 'f')
       MoveFront();
     else
       MoveBack();
@@ -97,16 +97,20 @@ void DownPlatform(){
 
 void CheckColor(){
   if(SensorLeft == 1){ //Cor for vermelho 
-    if(!isUp){
+    if(direction == 'f'){
+      if(!isUp){
       time = millis() + 5000;    
-    }
-    if(time > millis()){
+      }
+      if(time > millis()){
         UpPlatform();
 
+      }else{
+        isUp = false;
+        direction = 'b';
+      } 
     }else{
-      isUp = false;
-      direction = 'b';
-    } 
+      DownPlatform();
+    }
   }
 }
 
