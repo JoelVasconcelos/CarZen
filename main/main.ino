@@ -42,9 +42,9 @@ void loop() {
   testEngines();
 
   // put your main code here, to run repeatedly:
-  CheckObstacle();
-  Move();
-  CheckColor();
+  // CheckObstacle();
+  // Move();
+  // CheckColor();
 }
 
 void MoveFront() {

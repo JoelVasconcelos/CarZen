@@ -74,40 +74,40 @@ void engineON(uint8_t directM1, uint8_t directM2) {
 
 void testEngines() {
 
-  digitalWrite(Up, HIGH);
-  delay(1500);
   digitalWrite(Up, LOW);
   delay(1500);
-  digitalWrite(Down, HIGH);
+  digitalWrite(Up, HIGH);
   delay(1500);
   digitalWrite(Down, LOW);
   delay(1500);
-
-  // Move para frente
-  MoveFront();
+  digitalWrite(Down, HIGH);
   delay(1500);
-  engineOFF();
 
-  delay(2000);
+  // // Move para frente
+  // MoveFront();
+  // delay(1500);
+  // engineOFF();
 
-  // Move para tras
-  MoveBack();
-  delay(1500);
-  engineOFF();
+  // delay(2000);
 
-  delay(2000);
+  // // Move para tras
+  // MoveBack();
+  // delay(1500);
+  // engineOFF();
 
-  // Move para o lado direito 
-  engineON(2, 3);
-  delay(1500);
-  engineOFF();
+  // delay(2000);
 
-  delay(2000);
+  // // Move para o lado direito 
+  // engineON(2, 3);
+  // delay(1500);
+  // engineOFF();
 
-  // Move para o lado esquerdo
-  engineON(3, 2);
-  delay(1500);
-  engineOFF();
+  // delay(2000);
 
-  delay(2000);
+  // // Move para o lado esquerdo
+  // engineON(3, 2);
+  // delay(1500);
+  // engineOFF();
+
+  // delay(2000);
 }
