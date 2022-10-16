@@ -24,7 +24,7 @@ bool SensorRight = 0;
 #define pinEcho 13
 #define maxDistance 14
 
-
+bool isUp = false;
 char direction = 'f';
 long time = 0;
 
@@ -93,15 +93,18 @@ void DownPlatform(){
 }
 
 void CheckColor(){
-    if(SensorLeft == 1 && ){ //Cor for vermelho 
-
-      if(time < millis()){
-        UpPlatform();
-        time = millis() + 5000;
-
-      } 
-      
-
+  if(SensorLeft == 1){ //Cor for vermelho 
+    if(!isUP){
+      time = millis() + 5000;    
     }
+    if(time > millis()){
+        UpPlatform();
+
+    }else{
+      isUp = false;
+      direction = 'b';
+    } 
+  }
 }
+
 
