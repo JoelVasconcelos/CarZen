@@ -1,5 +1,5 @@
-#include <NewPing.h>
 
+#include <NewPing.h>
 // Definição dos pinos dos motores
 #define D 2
 #define R 3
@@ -17,14 +17,18 @@
 //Definição dos pinos dos sensores
 #define pinS1 10
 #define pinS2 11
+
 bool SensorLeft = 0;
 bool SensorRight = 0;
 #define pinTrigger  12
 #define pinEcho 13
 #define maxDistance 14
 
-bool direction = 0;
-int time = 0;
+
+char direction = 'f';
+long time = 0;
+
+
 
 NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
@@ -89,7 +93,14 @@ void DownPlatform(){
 }
 
 void CheckColor(){
-    if(SensorLeft == 1){ //Cor for vermelho 
+    if(SensorLeft == 1 && ){ //Cor for vermelho 
+
+      if(time < millis()){
+        UpPlatform();
+        time = millis() + 5000;
+
+      } 
+      
 
     }
 }
