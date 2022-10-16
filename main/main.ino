@@ -99,7 +99,7 @@ void CheckColor(){
   if(SensorLeft == 1){ //Cor for vermelho 
     if(direction == 'f'){
       if(!isUp){
-      time = millis() + 5000;    
+        time = millis() + 5000;    
       }
       if(time > millis()){
         UpPlatform();
