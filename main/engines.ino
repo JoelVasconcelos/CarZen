@@ -1,15 +1,4 @@
-#define D 2
-#define R 3
-#define M1D 7
-#define M1R 8
-#define M2D 9
-#define M2R 4
-#define PwmM1 5
-#define PwmM2 6
-
-void setup(){  // Faz as configuração para a utilização das funções no Sketch
-  Serial.begin(9600); // Iniciar a serial para fazer o monitoramento
-
+void setupEngine(){  // Faz as configuração para a utilização das funções no Sketch
       pinMode(M1D, OUTPUT);
       pinMode(M1R, OUTPUT);
       pinMode(M2D, OUTPUT);
@@ -24,13 +13,7 @@ void setup(){  // Faz as configuração para a utilização das funções no Ske
       digitalWrite(M2R, LOW);
 }
 
-void loop(){
-engineON(2, 2);
-delay(5000);
-engineON(3, 2);
-delay(5000);
-}                  
-
+            
 void startEngine(uint8_t motor, uint8_t pwm){
   int i = pwm*.3;
   while (i <= pwm) {
@@ -53,7 +36,7 @@ void engineOFF(int motor){
 }
 
 void engineON(uint8_t directM1, uint8_t directM2) {
-int pwm = 255;
+  int pwm = 255;
         if(directM1 == 2) {
             digitalWrite(M1D, HIGH);
             analogWrite(PwmM1, pwm);
