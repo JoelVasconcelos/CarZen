@@ -5,12 +5,15 @@ void setupEngine(){  // Faz as configuração para a utilização das funções 
       pinMode(M2R, OUTPUT);
       pinMode(PwmM1, OUTPUT);
       pinMode(PwmM2, OUTPUT);
-
+      pinMode(Up, OUTPUT);
+      pinMode(Down, OUTPUT);
 
       digitalWrite(M1D, LOW);
       digitalWrite(M1R, LOW);
       digitalWrite(M2D, LOW);
       digitalWrite(M2R, LOW);
+      digitalWrite(Up, LOW);
+      digitalWrite(Down, LOW);
 }
     
 void startEngine(uint8_t motor, uint8_t pwm){
@@ -70,31 +73,41 @@ void engineON(uint8_t directM1, uint8_t directM2) {
 }
 
 void testEngines() {
-  // Move para frente
-  MoveFront();
+
+  digitalWrite(Up, LOW);
   delay(1500);
-  engineOFF();
-
-  delay(2000);
-
-  // Move para tras
-  MoveBack();
+  digitalWrite(Up, HIGH);
   delay(1500);
-  engineOFF();
-
-  delay(2000);
-
-  // Move para o lado direito 
-  engineON(2, 3);
+  digitalWrite(Down, LOW);
   delay(1500);
-  engineOFF();
-
-  delay(2000);
-
-  // Move para o lado esquerdo
-  engineON(3, 2);
+  digitalWrite(Down, HIGH);
   delay(1500);
-  engineOFF();
 
-  delay(2000);
+  // // Move para frente
+  // MoveFront();
+  // delay(1500);
+  // engineOFF();
+
+  // delay(2000);
+
+  // // Move para tras
+  // MoveBack();
+  // delay(1500);
+  // engineOFF();
+
+  // delay(2000);
+
+  // // Move para o lado direito 
+  // engineON(2, 3);
+  // delay(1500);
+  // engineOFF();
+
+  // delay(2000);
+
+  // // Move para o lado esquerdo
+  // engineON(3, 2);
+  // delay(1500);
+  // engineOFF();
+
+  // delay(2000);
 }
