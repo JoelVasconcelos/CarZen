@@ -6,7 +6,7 @@
 #define M2D 9
 #define M2R 4
 #define PwmM1 5
-#define pwmM2 6
+#define PwmM2 6
 
 #define triggerPin 10
 #define echoPin 11
@@ -37,17 +37,21 @@ void setup(){  // Faz as configuração para a utilização das funções no Ske
 }
 
 void loop(){
-   Serial.print(sonar.ping_cm());
-   Serial.println(" CM");
+  //  Serial.print(sonar.ping_cm());
+  //  Serial.println(" CM");
 
   //Indo para a frente 
-  engineON(0, D, 255); 
-  engineON(1, D, 255); 
+  // engineON(0, D, 255); 
+  // engineON(1, D, 255); 
 
-  delay(2000);
-  engineOFF(0);
-  engineOFF(1);
-  delay(2000);
+  // delay(2000);
+  // engineOFF(0);
+  // engineOFF(1);
+  // delay(2000);
+engine(2, 2);
+delay(5000);
+engine(3, 2);
+delay(5000);
 
 }                  
 
@@ -62,59 +66,47 @@ void startEngine(uint8_t motor, uint8_t pwm){
 }
 
 void engineOFF(int motor){ 
-  for(int i=0; i<2; i++) {
-    digitalWrite(inApin[i], LOW);
-    digitalWrite(inBpin[i], LOW);
-  }
-  analogWrite(pwmpin[motor], 0);
-}
 
-void engineON(uint8_t motor, uint8_t direct, uint8_t pwm) {         //Função que controla as variáveis: motor(0 ou 1), sentido (D ou R) e pwm (entra 0 e 255)
-  if(motor <= 1) { // identifica qual motor será movido 0 - motor esquerdo e 1 - motor direito
-        if(direct == 2) 
-            digitalWrite(inApin[motor], HIGH);
-        else
-            digitalWrite(inApin[motor], LOW);
+      digitalWrite(M1D, LOW);
+      digitalWrite(M1R, LOW);
+      digitalWrite(M2D, LOW);
+      digitalWrite(M2R, LOW);
 
-        if(direct == 3)
-            digitalWrite(inBpin[motor], HIGH);
-        else
-            digitalWrite(inBpin[motor], LOW);
-
-      startEngine(pwmpin[motor], pwm);
-  }
+  analogWrite(PwmM1, 0);
+  analogWrite(PwmM2, 0);
 }
 
 void engine(uint8_t directM1, uint8_t directM2) {
+int pwm = 255;
         if(directM1 == 2) {
             digitalWrite(M1D, HIGH);
-            analogWrite(M1D, 255);
-        } else
+            analogWrite(PwmM1, pwm);
+            // startEngine(PwmM1, pwm);
+        } else {
             digitalWrite(M1D, LOW);
+        }
 
         if(directM1 == 3) {
             digitalWrite(M1R, HIGH);
-            analogWrite(M1R, 255);
-        } else
+            analogWrite(PwmM1, pwm);            
+            // startEngine(PwmM1, pwm);
+        } else{
             digitalWrite(M1R, LOW);
-
-
+        }
+// ---------------------------------------
         if(directM2 == 2) {
             digitalWrite(M2D, HIGH);
-            analogWrite(M2D, 255);
-        }
- 
-
-        else
+            analogWrite(PwmM2, pwm);
+            // startEngine(PwmM2, pwm);
+        } else {
             digitalWrite(M2D, LOW);
+        }
 
-        if(directM2 == 3) 
+        if(directM2 == 3) {
             digitalWrite(M2R, HIGH);
-            analogWrite(M1D, 255);
-
-        else
+            analogWrite(PwmM2, pwm);
+            // startEngine(PwmM2, pwm);
+        } else {
             digitalWrite(M2R, LOW);
-
-        
-
+        }
 }
