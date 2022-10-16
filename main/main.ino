@@ -11,8 +11,8 @@
 #define PwmM2 6
 
 // Definicao dos pinos da plataforma
-#define Up 2
-#define Down 3
+#define Up 12
+#define Down 13
 
 //Definição dos pinos dos sensores
 #define pinS1 10
@@ -33,7 +33,7 @@ long time = 0;
 NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
 void setup() {
-
+  Serial.begin(9600);
   setupEngine();
   // put your setup code here, to run once:
 
@@ -43,12 +43,12 @@ void setup() {
 
 void loop() {
 
-  testEngines();
+  // testEngines();
 
   // put your main code here, to run repeatedly:
   // CheckObstacle();
   // Move();
-  // CheckColor();
+  CheckColor();
 }
 
 void MoveFront() {
@@ -69,8 +69,10 @@ void Move(){
       MoveFront();
     else if(direction == 'b')
       MoveBack();
-    else
-      break;
+    else{
+
+    }
+      // break;
   }
   
   if((SensorLeft == 0) && (SensorRight == 1)){ // Se detectar o lado branco na esquerda e o lado preto na direita
@@ -90,18 +92,24 @@ void CheckObstacle(){
 }
 
 void UpPlatform(){
-  
+  digitalWrite(Down, HIGH);
+  digitalWrite(Up, LOW);
+
 }
 
 void DownPlatform(){
-  
+  digitalWrite(Down, LOW);
+  digitalWrite(Up, HIGH);
+
 }
 
-void CheckColor(){
+void CheckColor(){ 
+  SensorLeft = 1;
   if(SensorLeft == 1){ //Cor for vermelho 
     if(direction == 'f'){
       if(!isUp){
-        time = millis() + 5000;    
+        time = millis() + 5000;   
+        isUp = true;
       }
       if(time > millis()){
         UpPlatform();

@@ -5,7 +5,8 @@ void setupEngine(){  // Faz as configuração para a utilização das funções 
   pinMode(M2R, OUTPUT);
   pinMode(PwmM1, OUTPUT);
   pinMode(PwmM2, OUTPUT);
-
+  pinMode(Up, OUTPUT);
+  pinMode(Down, OUTPUT);
 
   digitalWrite(M1D, LOW);
   digitalWrite(M1R, LOW);
