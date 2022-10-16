@@ -65,7 +65,10 @@ void Move(){
   SensorRight = digitalRead(pinS2);
 
   if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
-    MoveFront();
+    if(direction = 'f')
+      MoveFront();
+    else
+      MoveBack();
   }
   
   if((SensorLeft == 0) && (SensorRight == 1)){ // Se detectar o lado branco na esquerda e o lado preto na direita
