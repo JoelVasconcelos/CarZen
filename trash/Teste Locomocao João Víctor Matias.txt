@@ -1,0 +1,108 @@
+#define BRAKEVCC 0
+#define D 1
+#define R 2
+#define BRAKEGND 3
+#define CS_THRESHOLD 180
+
+ 
+
+int inApin[2] = {14, 27}; // INA: Sentido Horário Motor0 e Motor1 (Consulte:"1.2) Hardware Monster Motor Shield").
+int inBpin[2] = {13, 12}; // INB: Sentido Anti-Horário Motor0 e Motor1 (Consulte: "1.2) Hardware Monster Motor Shield").
+int pwmpin[2] = {2, 4}; // Entrada do PWM
+
+
+//int inApin[2] = {7, 4}; // INA: Sentido Horário Motor0 e Motor1 (Consulte:"1.2) Hardware Monster Motor Shield").
+//int inBpin[2] = {8, 9}; // INB: Sentido Anti-Horário Motor0 e Motor1 (Consulte: "1.2) Hardware Monster Motor Shield").
+//int pwmpin[2] = {5, 6}; // Entrada do PWM
+//int cspin[2] = {2, 3};  // Entrada do Sensor de Corrente
+
+int i=0;
+void setup(){  // Faz as configuração para a utilização das funções no Sketch
+
+  Serial.begin(9600);        
+      // Iniciar a serial para fazer o monitoramento
+  //pinMode(statpin, OUTPUT);
+
+  for (int i=0; i<2; i++) {
+      pinMode(inApin[i], OUTPUT);
+      pinMode(inBpin[i], OUTPUT);
+      pinMode(pwmpin[i], OUTPUT);
+  }
+
+  for (int i=0; i<2; i++) {
+      digitalWrite(inApin[i], LOW);
+      digitalWrite(inBpin[i], LOW);
+  }
+}
+
+void loop(){
+
+  //Indo para a frente 
+  engineON(0, D, 255); 
+  engineON(1, D, 255); 
+  delay(2000);
+  engineOFF(0);
+  engineOFF(1);
+
+    //Indo para o lado esquerdo
+  engineON(0, D, 255); 
+  engineON(1, R, 255); 
+  delay(2000);
+  engineOFF(0);
+  engineOFF(1);
+
+  //Indo para a frente 
+  engineON(0, D, 255); 
+  engineON(1, D, 255); 
+  delay(2000);
+  engineOFF(0);
+  engineOFF(1);
+
+ //Indo para o lado esquerdo
+  engineON(0, R, 255); 
+  engineON(1, D, 255); 
+  delay(2000);
+  engineOFF(0);
+  engineOFF(1);
+
+  //Indo para a frente 
+  engineON(0, D, 255); 
+  engineON(1, D, 255); 
+  delay(2000);
+  engineOFF(0);
+  engineOFF(1);
+
+
+}                      // Programa roda dentro do loop
+
+void engineOFF(int motor){     //Função para desligar o motor se o mesmo trava
+  for(int i=0; i<2; i++) {
+    digitalWrite(inApin[i], LOW);
+    digitalWrite(inBpin[i], LOW);
+  }
+  
+/*  analogWrite(pwmpin[motor], 0);
+  i=0;
+  digitalWrite(13, HIGH);
+  Serial.println("Motor Travado");
+  delay(1000); */
+}
+
+
+void engineON(uint8_t motor, uint8_t direct, uint8_t pwm) {         //Função que controla as variáveis: motor(0 ou 1), sentido (D ou R) e pwm (entra 0 e 255)
+  if(motor <= 1) {
+    if(direct <=4) {
+        if(direct <=1) 
+            digitalWrite(inApin[motor], HIGH);
+        else
+            digitalWrite(inApin[motor], LOW);
+
+        if((direct==0)||(direct==2))
+            digitalWrite(inBpin[motor], HIGH);
+        else
+            digitalWrite(inBpin[motor], LOW);
+
+        //analogWrite(pwmpin[motor], pwm);
+    }
+  }
+}

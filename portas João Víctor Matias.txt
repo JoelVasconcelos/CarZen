@@ -1,6 +1,0 @@
-4 -> Cinza / 4
-5-> Branco / 25
-6 -> preto / 26
-7 -> marrom / 2
-8 ->vermelho / 23
-9 -> laranja  / 22
