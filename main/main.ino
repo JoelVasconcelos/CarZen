@@ -21,38 +21,38 @@
 
 //Definição dos pinos dos sensores de cor
 // Left
-#define sensorLeftS0 30; 
-#define sensorLeftS1 31; 
-#define sensorLeftS2 32; 
-#define sensorLeftS3 33; 
-#define sensorLeftOUT 34; 
+const int sensorLeftS0 = 30; 
+const int sensorLeftS1 = 31; 
+const int sensorLeftS2 = 32; 
+const int sensorLeftS3 = 33; 
+const int sensorLeftOUT = 34; 
 
 // Right
-#define sensorRightS0 35; 
-#define sensorRightS1 36; 
-#define sensorRightS2 37; 
-#define sensorRightS3 38; 
-#define sensorRightOUT 39; 
+const int sensorRightS0 = 35; 
+const int sensorRightS1 = 36; 
+const int sensorRightS2 = 37; 
+const int sensorRightS3 = 38; 
+const int sensorRightOUT = 39; 
 
 
 // Variaveis que armazenam o valor das cores
 // Left
-#define corVermelhoLeft 0;
-#define corVerdeLeft 0;
-#define corAzulLeft 0;
+int corVermelhoLeft = 0;
+int corVerdeLeft = 0;
+int corAzulLeft = 0;
 
 // Right
-#define corVermelhoRight 0;
-#define corVerdeRight 0;
-#define corAzulRight 0;
+int corVermelhoRight = 0;
+int corVerdeRight = 0;
+int corAzulRight = 0;
 
 
 // Sensor de distancia
 // Definição dos pinos
-#define pinTrigger  30
-#define pinEcho 31
+#define pinTrigger 52
+#define pinEcho 53
 // Definição da distancia maxima lida pelo sensor 
-#define maxDistance 100
+#define maxDistance 200
 
 
 // Definição das variaveis para o tempo de subida da plataforma
@@ -75,7 +75,6 @@ void setup() {
 }
 
 void loop() {
-  // testEngines();
   checkObstacle();
 }
 
@@ -94,6 +93,7 @@ void checkColor() {
   }
 
   if(corVermelhoLeft<185 && corVerdeLeft<185 && corAzulLeft<145){ // Se detectar o lado preto na esquerda e o lado branco na direita
+    
     engineON(3, 2);
   }
   
@@ -109,18 +109,19 @@ void checkColor() {
 
   if (maneuver) {
     if (corVermelhoRight<185 && corVerdeRight<185 && corAzulRight<145) {
-      maneuver == false;
+      maneuver = false;
     }
     engineON(3, 2);
   }
 }
 
 void checkObstacle(){
-  Serial.println(sonar.ping_cm());
+  // Serial.println(sonar.ping_cm());
   if (sonar.ping_cm() <= 10){
     engineOFF();
+  } else {
+    checkColor();
   }
-  checkColor();
 }
 
 void platform(){ 

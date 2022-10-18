@@ -37,7 +37,7 @@ void engineOFF(){
 
 void engineON(uint8_t directM1, uint8_t directM2) {
   int pwm = 255;
-  if(directM1 == 2) {
+  if(directM1 == 2) { // 2 = mover para frente
     digitalWrite(M1D, HIGH);
     analogWrite(PwmM1, pwm);
     // startEngine(PwmM1, pwm);
@@ -45,7 +45,7 @@ void engineON(uint8_t directM1, uint8_t directM2) {
     digitalWrite(M1D, LOW);
   }
 
-  if(directM1 == 3) {
+  if(directM1 == 3) { // 3 = mover para frente
     digitalWrite(M1R, HIGH);
     analogWrite(PwmM1, pwm);            
     // startEngine(PwmM1, pwm);
@@ -53,7 +53,7 @@ void engineON(uint8_t directM1, uint8_t directM2) {
     digitalWrite(M1R, LOW);
   }
   // ---------------------------------------
-  if(directM2 == 2) {
+  if(directM2 == 2) { // 2 = mover para frente
     digitalWrite(M2D, HIGH);
     analogWrite(PwmM2, pwm);
     // startEngine(PwmM2, pwm);
@@ -61,7 +61,7 @@ void engineON(uint8_t directM1, uint8_t directM2) {
     digitalWrite(M2D, LOW);
   }
 
-  if(directM2 == 3) {
+  if(directM2 == 3) { // 3 = mover para frente
     digitalWrite(M2R, HIGH);
     analogWrite(PwmM2, pwm);
     // startEngine(PwmM2, pwm);
@@ -71,38 +71,38 @@ void engineON(uint8_t directM1, uint8_t directM2) {
 }
 
 void testEngines() {
-  // Move para frente
-  MoveFront();
-  delay(1500);
-  engineOFF();
+  // // Move para frente
+  // MoveFront();
+  // delay(1500);
+  // engineOFF();
 
-  delay(2000);
+  // delay(2000);
 
-  // Move para tras
-  MoveBack();
-  delay(1500);
-  engineOFF();
+  // // Move para tras
+  // MoveBack();
+  // delay(1500);
+  // engineOFF();
 
-  delay(2000);
+  // delay(2000);
 
-  // Move para o lado direito 
-  engineON(2, 3);
-  delay(1500);
-  engineOFF();
+  // // Move para o lado direito 
+  // engineON(2, 3);
+  // delay(1500);
+  // engineOFF();
 
-  delay(2000);
+  // delay(2000);
 
-  // Move para o lado esquerdo
-  engineON(3, 2);
-  delay(1500);
-  engineOFF();
+  // // Move para o lado esquerdo
+  // engineON(3, 2);
+  // delay(1500);
+  // engineOFF();
 
-  delay(2000);
+  // delay(2000);
 
-  digitalWrite(Up, LOW);
-  delay(3000);
-  digitalWrite(Up, HIGH);
-  digitalWrite(Down, LOW);
-  delay(3000);
-  digitalWrite(Down, HIGH);
+  // digitalWrite(Up, LOW);
+  // delay(3000);
+  // digitalWrite(Up, HIGH);
+  // digitalWrite(Down, LOW);
+  // delay(3000);
+  // digitalWrite(Down, HIGH);
 }
