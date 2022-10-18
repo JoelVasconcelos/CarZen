@@ -1,8 +1,10 @@
-
 #include <NewPing.h>
-// Definição dos pinos dos motores
+
+// Definição do sentido de rotação dos motores
 #define D 2
 #define R 3
+
+// Definição dos pinos dos motores
 #define M1D 7
 #define M1R 8
 #define M2D 9
@@ -14,16 +16,38 @@
 #define Up 22
 #define Down 23
 
-//Definição dos pinos dos sensores
-#define pinS1 10
-#define pinS2 11
+//Definição dos pinos dos sensores de cor
+// Left
+#define sensorLeftS0 30; 
+#define sensorLeftS1 31; 
+#define sensorLeftS2 32; 
+#define sensorLeftS3 33; 
+#define sensorLeftOUT 34; 
 
-bool SensorLeft = 0;
-bool SensorRight = 0;
+// Right
+#define sensorRightS0 35; 
+#define sensorRightS1 36; 
+#define sensorRightS2 37; 
+#define sensorRightS3 38; 
+#define sensorRightOUT 39; 
+
+// Variaveis que armazenam o valor das cores
+// Left
+#define corVermelhoLeft 0;
+#define corVerdeLeft 0;
+#define corAzulLeft 0;
+
+// Right
+#define corVermelhoRight 0;
+#define corVerdeRight 0;
+#define corAzulRight 0;
+
+// Definição dos pinos do sensor de distancia
 #define pinTrigger  30
 #define pinEcho 31
 #define maxDistance 100
 
+// Definição das variaveis para o temp[o de subida da plataforma
 bool isUp = false;
 char direction = 'f';
 long time = 0;
@@ -33,26 +57,34 @@ NewPing sonar(pinTrigger,pinEcho,maxDistance);
 void setup() {
   Serial.begin(9600);
   setupEngine();
-  // put your setup code here, to run once:
-
-  pinMode(pinS1, INPUT);
-  pinMode(pinS2, INPUT);
+  setupSensors();
 }
 
 void loop() {
-
   // testEngines();
-
-  // put your main code here, to run repeatedly:
-  if(!CheckObstacle()) {
-    // Move();
-    MoveFront();
-    } else {
-    engineOFF();
-  }
+  CheckObstacle();
 
   CheckColor();
 
+corVermelhoLeft = leitorVermelho(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+corVermelhoRight = leitorVermelho(sensorRightS2, sensorRightS3, sensorRightOUT); 
+
+corVerdeLeft = leitorVerde(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+corVerdeRight = leitorVerde(sensorRightS2, sensorRightS3, sensorRightOUT); 
+
+corAzulLeft = leitorAzul(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+corAzulRight = leitorAzul(sensorRightS2, sensorRightS3, sensorRightOUT); 
+
+
+ if(corVermelho>185 && corVerde>185 && corAzul>145){Serial.println("preto");}//SE PRETO
+
+ if(corVermelho<40 && corVerde<40 && corAzul<40){Serial.println("branco");}//SE BRANCO
+
+ if(corVerde>corAzul && corAzul>corVermelho && corVermelho<60){Serial.println("vermelho");}// SE VERMELHO
+
+ if(corVermelho>corVerde && corVerde>corAzul && corAzul<60){Serial.println("azul");}// SE AZUL
+
+}
 }
 
 void MoveFront() {
@@ -64,10 +96,6 @@ void MoveBack() {
 }
 
 void Move(){
-
-  SensorLeft = digitalRead(pinS1);
-  SensorRight = digitalRead(pinS2);
-
   if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
     if(direction == 'f')
       MoveFront();
@@ -88,12 +116,13 @@ void Move(){
   }
 }
 
-bool CheckObstacle(){
+void CheckObstacle(){
   Serial.println(sonar.ping_cm());
   if (sonar.ping_cm() <= 10){
-    return true;
+    engineOFF();
   }
-  return false;
+  Move();
+  // MoveFront();
 }
 
 void UpPlatform(){
