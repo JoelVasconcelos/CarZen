@@ -72,3 +72,11 @@ int leitorAzul(int sensorS2, int sensorS3, int sensorOUT){
   }   
   return cor;
 }
+
+//  if(corVermelho>185 && corVerde>185 && corAzul>145){Serial.println("preto");}//SE PRETO
+
+//  if(corVermelho<40 && corVerde<40 && corAzul<40){Serial.println("branco");}//SE BRANCO
+
+//  if(corVerde>corAzul && corAzul>corVermelho && corVermelho<60){Serial.println("vermelho");}// SE VERMELHO
+
+//  if(corVermelho>corVerde && corVerde>corAzul && corAzul<60){Serial.println("azul");}// SE AZUL

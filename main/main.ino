@@ -4,6 +4,7 @@
 #define D 2
 #define R 3
 
+
 // Definição dos pinos dos motores
 #define M1D 7
 #define M1R 8
@@ -12,9 +13,11 @@
 #define PwmM1 5
 #define PwmM2 6
 
-// Definicao dos pinos da plataforma
-#define Up 22
-#define Down 23
+
+// Definicao dos pinos do motor da plataforma
+#define Up 40
+#define Down 41
+
 
 //Definição dos pinos dos sensores de cor
 // Left
@@ -31,6 +34,7 @@
 #define sensorRightS3 38; 
 #define sensorRightOUT 39; 
 
+
 // Variaveis que armazenam o valor das cores
 // Left
 #define corVermelhoLeft 0;
@@ -42,16 +46,26 @@
 #define corVerdeRight 0;
 #define corAzulRight 0;
 
-// Definição dos pinos do sensor de distancia
+
+// Sensor de distancia
+// Definição dos pinos
 #define pinTrigger  30
 #define pinEcho 31
+// Definição da distancia maxima lida pelo sensor 
 #define maxDistance 100
 
-// Definição das variaveis para o temp[o de subida da plataforma
+
+// Definição das variaveis para o tempo de subida da plataforma
 bool isUp = false;
 char direction = 'f';
 long time = 0;
 
+
+// Definição da variavel de estado da manobra
+bool maneuver = false;
+
+
+// Inicialização do sonar para o sensor de distancia
 NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
 void setup() {
@@ -62,106 +76,77 @@ void setup() {
 
 void loop() {
   // testEngines();
-  CheckObstacle();
-
-  CheckColor();
-
-corVermelhoLeft = leitorVermelho(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
-corVermelhoRight = leitorVermelho(sensorRightS2, sensorRightS3, sensorRightOUT); 
-
-corVerdeLeft = leitorVerde(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
-corVerdeRight = leitorVerde(sensorRightS2, sensorRightS3, sensorRightOUT); 
-
-corAzulLeft = leitorAzul(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
-corAzulRight = leitorAzul(sensorRightS2, sensorRightS3, sensorRightOUT); 
-
-
- if(corVermelho>185 && corVerde>185 && corAzul>145){Serial.println("preto");}//SE PRETO
-
- if(corVermelho<40 && corVerde<40 && corAzul<40){Serial.println("branco");}//SE BRANCO
-
- if(corVerde>corAzul && corAzul>corVermelho && corVermelho<60){Serial.println("vermelho");}// SE VERMELHO
-
- if(corVermelho>corVerde && corVerde>corAzul && corAzul<60){Serial.println("azul");}// SE AZUL
-
-}
+  checkObstacle();
 }
 
-void MoveFront() {
-  engineON(2,2); // Move para frente atravez dos dois parametros definidos como 2
-}
+void checkColor() {
+  corVermelhoLeft = leitorVermelho(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+  corVermelhoRight = leitorVermelho(sensorRightS2, sensorRightS3, sensorRightOUT); 
 
-void MoveBack() {
-  engineON(3,3); // Move para frente atravez dos dois parametros definidos como 2
-}
+  corVerdeLeft = leitorVerde(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+  corVerdeRight = leitorVerde(sensorRightS2, sensorRightS3, sensorRightOUT); 
 
-void Move(){
-  if((SensorLeft == 0) && (SensorRight == 0)){ // Se detectar na extremidade das faixas duas cores brancas
-    if(direction == 'f')
-      MoveFront();
-    else if(direction == 'b')
-      MoveBack();
-    else{
+  corAzulLeft = leitorAzul(sensorLeftS2, sensorLeftS3, sensorLeftOUT); 
+  corAzulRight = leitorAzul(sensorRightS2, sensorRightS3, sensorRightOUT); 
 
-    }
-      // break;
+  if (!maneuver) {
+    engineON(2, 2);
+  }
+
+  if(corVermelhoLeft<185 && corVerdeLeft<185 && corAzulLeft<145){ // Se detectar o lado preto na esquerda e o lado branco na direita
+    engineON(3, 2);
   }
   
-  if((SensorLeft == 0) && (SensorRight == 1)){ // Se detectar o lado branco na esquerda e o lado preto na direita
+  if(corVermelhoRight<185 && corVerdeRight<185 && corAzulRight<145){ // Se detectar o lado branco na esquerda e o lado preto na direita
     engineON(2, 3);
   }
-  
-  if((SensorLeft == 1) && (SensorRight == 0)){ // Se detectar o lado preto na esquerda e o lado branco na direita
+
+  if((corVerdeLeft>corAzulLeft && corAzulLeft>corVermelhoLeft && corVermelhoLeft<60) && (corVerdeRight>corAzulRight && corAzulRight>corVermelhoRight && corVermelhoRight<60)){ // Se detectar o vermelho nos dois sensores
+    engineOFF(); 
+    maneuver = true;
+    platform();
+  }
+
+  if (maneuver) {
+    if (corVermelhoRight<185 && corVerdeRight<185 && corAzulRight<145) {
+      maneuver == false;
+    }
     engineON(3, 2);
   }
 }
 
-void CheckObstacle(){
+void checkObstacle(){
   Serial.println(sonar.ping_cm());
   if (sonar.ping_cm() <= 10){
     engineOFF();
   }
-  Move();
-  // MoveFront();
+  checkColor();
 }
 
-void UpPlatform(){
-  digitalWrite(Down, HIGH);
-  digitalWrite(Up, LOW);
-}
+void platform(){ 
+  if (direction == 'f'){ 
+    if (!isUp){
+      time = millis() + 5000;   
+      isUp = true;
+    }
+    if (time > millis()){
+      digitalWrite(Down, HIGH);
+      digitalWrite(Up, LOW);
+    } else {
+      isUp = false;
+      direction = 'b';
+    } 
 
-void DownPlatform(){
-  digitalWrite(Up, HIGH);
-  digitalWrite(Down, LOW);
-} 
-
-void CheckColor(){ 
-  SensorLeft = 1;
-  if (SensorLeft == 1){ //Cor for vermelho 
-    if (direction == 'f'){ 
-      if (!isUp){
-        time = millis() + 5000;   
-        isUp = true;
-      }
-      if (time > millis()){
-        UpPlatform();
-      } else {
-        isUp = false;
-        direction = 'b';
-      } 
-
-    }else if (direction == 'b'){
-      if (!isUp){
-        time = millis() + 5000;   
-        isUp = true;
-      }
-      if (time > millis()){
-        DownPlatform();
-      } else {
-        digitalWrite(Down, HIGH);
-      }
+  }else if (direction == 'b'){
+    if (!isUp){
+      time = millis() + 5000;   
+      isUp = true;
+    }
+    if (time > millis()){
+      digitalWrite(Up, HIGH);
+      digitalWrite(Down, LOW);
+    } else {
+      digitalWrite(Down, HIGH);
     }
   }
 }
-
-
