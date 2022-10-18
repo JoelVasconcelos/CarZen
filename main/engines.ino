@@ -52,7 +52,7 @@ void engineON(uint8_t directM1, uint8_t directM2) {
   } else{
     digitalWrite(M1R, LOW);
   }
-// ---------------------------------------
+  // ---------------------------------------
   if(directM2 == 2) {
     digitalWrite(M2D, HIGH);
     analogWrite(PwmM2, pwm);
