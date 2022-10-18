@@ -8,6 +8,7 @@ void setupEngine(){  // Faz as configuração para a utilização das funções 
   pinMode(Up, OUTPUT);
   pinMode(Down, OUTPUT);
 
+
   digitalWrite(M1D, LOW);
   digitalWrite(M1R, LOW);
   digitalWrite(M2D, LOW);
@@ -97,4 +98,11 @@ void testEngines() {
   engineOFF();
 
   delay(2000);
+
+  digitalWrite(Up, LOW);
+  delay(3000);
+  digitalWrite(Up, HIGH);
+  digitalWrite(Down, LOW);
+  delay(3000);
+  digitalWrite(Down, HIGH);
 }

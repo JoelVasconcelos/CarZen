@@ -11,8 +11,8 @@
 #define PwmM2 6
 
 // Definicao dos pinos da plataforma
-#define Up 12
-#define Down 13
+#define Up 22
+#define Down 23
 
 //Definição dos pinos dos sensores
 #define pinS1 10
