@@ -20,15 +20,13 @@
 
 bool SensorLeft = 0;
 bool SensorRight = 0;
-#define pinTrigger  12
-#define pinEcho 13
-#define maxDistance 14
+#define pinTrigger  30
+#define pinEcho 31
+#define maxDistance 100
 
 bool isUp = false;
 char direction = 'f';
 long time = 0;
-
-
 
 NewPing sonar(pinTrigger,pinEcho,maxDistance);
 
@@ -46,9 +44,15 @@ void loop() {
   // testEngines();
 
   // put your main code here, to run repeatedly:
-  // CheckObstacle();
-  // Move();
+  if(!CheckObstacle()) {
+    // Move();
+    MoveFront();
+    } else {
+    engineOFF();
+  }
+
   CheckColor();
+
 }
 
 void MoveFront() {
@@ -84,42 +88,49 @@ void Move(){
   }
 }
 
-void CheckObstacle(){
-  while(sonar.ping_cm() == 10){
-    //Parar
+bool CheckObstacle(){
+  Serial.println(sonar.ping_cm());
+  if (sonar.ping_cm() <= 10){
+    return true;
   }
-
+  return false;
 }
 
 void UpPlatform(){
   digitalWrite(Down, HIGH);
   digitalWrite(Up, LOW);
-
 }
 
 void DownPlatform(){
-  digitalWrite(Down, LOW);
   digitalWrite(Up, HIGH);
-
-}
+  digitalWrite(Down, LOW);
+} 
 
 void CheckColor(){ 
   SensorLeft = 1;
-  if(SensorLeft == 1){ //Cor for vermelho 
-    if(direction == 'f'){
-      if(!isUp){
+  if (SensorLeft == 1){ //Cor for vermelho 
+    if (direction == 'f'){ 
+      if (!isUp){
         time = millis() + 5000;   
         isUp = true;
       }
-      if(time > millis()){
+      if (time > millis()){
         UpPlatform();
-
-      }else{
+      } else {
         isUp = false;
         direction = 'b';
       } 
-    }else{
-      DownPlatform();
+
+    }else if (direction == 'b'){
+      if (!isUp){
+        time = millis() + 5000;   
+        isUp = true;
+      }
+      if (time > millis()){
+        DownPlatform();
+      } else {
+        digitalWrite(Down, HIGH);
+      }
     }
   }
 }
