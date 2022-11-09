@@ -142,7 +142,12 @@ void checkColor() {
 }
 
 void checkObstacle(){
-  // Serial.println(sonar.ping_cm());
+  Serial.println(sonarDianteiro.ping_cm());
+  Serial.println(sonarDianteiroEsquedo.ping_cm());
+  Serial.println(sonarDianteiroDireito.ping_cm());
+  Serial.println(sonarLateralDireito.ping_cm());
+  Serial.println(sonarLateralEsquerdo.ping_cm());
+  Serial.println(sonarTraseiro.ping_cm());
   if (sonar.ping_cm() <= 10){
     engineOFF();
   } else {
