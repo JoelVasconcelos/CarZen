@@ -49,8 +49,28 @@ int corAzulRight = 0;
 
 // Sensor de distancia
 // Definição dos pinos
-#define pinTrigger 52
-#define pinEcho 53
+#define ptDianteiro 52
+#define peDianteiro 53
+
+#define ptDianteiroEsquedo 51
+#define peDianteiroEsquedo 50 
+
+#define ptDianteiroDireito 47
+#define peDianteiroDireito 46
+
+#define ptLateralDireito 49
+#define peLateralDireito 48
+
+#define ptLateralEsquerdo 45
+#define peLateralEsquerdo 44
+
+#define ptsonarTraseiro 43
+#define pesonarTraseiro 42
+
+
+
+
+#
 // Definição da distancia maxima lida pelo sensor 
 #define maxDistance 200
 
@@ -66,7 +86,13 @@ bool maneuver = false;
 
 
 // Inicialização do sonar para o sensor de distancia
-NewPing sonar(pinTrigger,pinEcho,maxDistance);
+NewPing sonarDianteiro(ptDianteiro,peDianteiro,maxDistance);
+NewPing sonarDianteiroEsquedo(ptDianteiroEsquedo,peDianteiroEsquedo,maxDistance);
+NewPing sonarDianteiroDireito(ptDianteiroDireito,peDianteiroDireito,maxDistance);
+NewPing sonarLateralDireito(pinTrigger,pinEcho,maxDistance);
+NewPing sonarLateralEsquerdo(pinTrigger,pinEcho,maxDistance);
+NewPing sonarTraseiro(pinTrigger,pinEcho,maxDistance);
+
 
 void setup() {
   Serial.begin(9600);
