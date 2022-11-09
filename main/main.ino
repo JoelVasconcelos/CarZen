@@ -141,6 +141,12 @@ void checkColor() {
   }
 }
 
+bool checkSides(){
+  returun false;
+}
+
+
+
 void checkObstacle(){
   Serial.println(sonarDianteiro.ping_cm());
   Serial.println(sonarDianteiroEsquedo.ping_cm());
@@ -150,7 +156,9 @@ void checkObstacle(){
   Serial.println(sonarTraseiro.ping_cm());
   if (sonar.ping_cm() <= 10){
     engineOFF();
-  } else {
+  } else if (checkSides()){
+    engineOFF(); //ajustar direcao
+  }else{
     checkColor();
   }
 }
