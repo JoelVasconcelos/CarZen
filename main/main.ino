@@ -141,11 +141,19 @@ void checkColor() {
   }
 }
 
+bool checkSides(){
+  returun false;
+}
+
+
+
 void checkObstacle(){
   // Serial.println(sonar.ping_cm());
   if (sonar.ping_cm() <= 10){
     engineOFF();
-  } else {
+  } else if (checkSides()){
+    engineOFF(); //ajustar direcao
+  }else{
     checkColor();
   }
 }
