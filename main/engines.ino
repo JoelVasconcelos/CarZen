@@ -1,7 +1,6 @@
 void setupEngine(){  // Faz as configuração para a utilização das funções no Sketch
   pinMode(M1D, OUTPUT);
-  pinMode(M1R, OU
-  TPUT);
+  pinMode(M1R, OUTPUT);
   pinMode(M2D, OUTPUT);
   pinMode(M2R, OUTPUT);
   pinMode(PwmM1, OUTPUT);

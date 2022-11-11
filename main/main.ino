@@ -64,13 +64,13 @@ int corAzulRight = 0;
 #define ptLateralEsquerdo 45
 #define peLateralEsquerdo 44
 
-#define ptsonarTraseiro 43
-#define pesonarTraseiro 42
+#define ptsonarTraseiro 41
+#define pesonarTraseiro 40
 
 
 
 
-#
+
 // Definição da distancia maxima lida pelo sensor 
 #define maxDistance 200
 
@@ -89,9 +89,9 @@ bool maneuver = false;
 NewPing sonarDianteiro(ptDianteiro,peDianteiro,maxDistance);
 NewPing sonarDianteiroEsquedo(ptDianteiroEsquedo,peDianteiroEsquedo,maxDistance);
 NewPing sonarDianteiroDireito(ptDianteiroDireito,peDianteiroDireito,maxDistance);
-NewPing sonarLateralDireito(pinTrigger,pinEcho,maxDistance);
-NewPing sonarLateralEsquerdo(pinTrigger,pinEcho,maxDistance);
-NewPing sonarTraseiro(pinTrigger,pinEcho,maxDistance);
+NewPing sonarLateralDireito(ptLateralDireito,peLateralDireito,maxDistance);
+NewPing sonarLateralEsquerdo(ptLateralEsquerdo,peLateralEsquerdo,maxDistance);
+NewPing sonarTraseiro(ptsonarTraseiro,pesonarTraseiro,maxDistance);
 
 
 void setup() {
@@ -141,20 +141,22 @@ void checkColor() {
   }
 }
 
-bool checkSides(){
-  returun false;
-}
+// bool checkSides(){
+//   returun false;
+// }
 
 
 
 void checkObstacle(){
-  Serial.println(sonarDianteiro.ping_cm());
-  Serial.println(sonarDianteiroEsquedo.ping_cm());
-  Serial.println(sonarDianteiroDireito.ping_cm());
-  Serial.println(sonarLateralDireito.ping_cm());
-  Serial.println(sonarLateralEsquerdo.ping_cm());
-  Serial.println(sonarTraseiro.ping_cm());
-  if (sonar.ping_cm() <= 10){
+  Serial.println((String)"Dianteiro: "+sonarDianteiro.ping_cm());
+  Serial.println((String)"Dianteiro ESQ: "+sonarDianteiroEsquedo.ping_cm());
+  Serial.println((String)"Dianteiro DIR = "+sonarDianteiroDireito.ping_cm());
+  Serial.println((String)"Lateral DIR= "+sonarLateralDireito.ping_cm());
+  Serial.println((String)"Lateral ESQ = "+sonarLateralEsquerdo.ping_cm());
+  Serial.println((String)"Traseiro = "+sonarTraseiro.ping_cm());
+  delay(2000);
+  Serial.println(">>>>>");
+  if (sonarDianteiro.ping_cm() <= 10){
     engineOFF();
   } else if (checkSides()){
     engineOFF(); //ajustar direcao
