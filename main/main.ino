@@ -49,23 +49,23 @@ int corAzulRight = 0;
 
 // Sensor de distancia
 // Definição dos pinos
-#define ptDianteiro 52
-#define peDianteiro 53
+#define ptDianteiro 26
+#define peDianteiro 27
 
-#define ptDianteiroEsquedo 51
-#define peDianteiroEsquedo 50 
+#define ptDianteiroEsquedo 30
+#define peDianteiroEsquedo 31
 
-#define ptDianteiroDireito 47
-#define peDianteiroDireito 46
+#define ptDianteiroDireito 28
+#define peDianteiroDireito 29
 
-#define ptLateralDireito 49
-#define peLateralDireito 48
+#define ptLateralDireito 24
+#define peLateralDireito 45
 
-#define ptLateralEsquerdo 45
-#define peLateralEsquerdo 44
+#define ptLateralEsquerdo 32
+#define peLateralEsquerdo 33
 
-#define ptsonarTraseiro 41
-#define pesonarTraseiro 40
+#define ptsonarTraseiro 22
+#define pesonarTraseiro 23
 
 
 
@@ -148,20 +148,24 @@ void checkColor() {
 
 
 void checkObstacle(){
-  Serial.println((String)"Dianteiro: "+sonarDianteiro.ping_cm());
-  Serial.println((String)"Dianteiro ESQ: "+sonarDianteiroEsquedo.ping_cm());
-  Serial.println((String)"Dianteiro DIR = "+sonarDianteiroDireito.ping_cm());
-  Serial.println((String)"Lateral DIR= "+sonarLateralDireito.ping_cm());
-  Serial.println((String)"Lateral ESQ = "+sonarLateralEsquerdo.ping_cm());
-  Serial.println((String)"Traseiro = "+sonarTraseiro.ping_cm());
-  delay(2000);
+  // Serial.println((String)"Dianteiro: "+sonarDianteiro.ping_cm());
+  // Serial.println((String)"Dianteiro ESQ: "+sonarDianteiroEsquedo.ping_cm());
+  // Serial.println((String)"Dianteiro DIR = "+sonarDianteiroDireito.ping_cm());
+  // Serial.println((String)"Lateral DIR= "+sonarLateralDireito.ping_cm());
+  // Serial.println((String)"Lateral ESQ = "+sonarLateralEsquerdo.ping_cm());
+  // Serial.println((String)"Traseiro = "+sonarTraseiro.ping_cm());
+  delay(100);
   Serial.println(">>>>>");
-  if (sonarDianteiro.ping_cm() <= 10){
+  Serial.println((String)"Dianteiro: "+sonarDianteiro.ping_cm());
+  if (sonarDianteiro.ping_cm() <= 30 && sonarDianteiro.ping_cm() >= 1){
     engineOFF();
-  } else if (checkSides()){
-    engineOFF(); //ajustar direcao
-  }else{
-    checkColor();
+  } 
+  // else if (checkSides()){
+  //   engineOFF(); //ajustar direcao
+  // }
+  else{
+    // checkColor();
+    engineON(2, 2);
   }
 }
 
