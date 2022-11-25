@@ -20,9 +20,9 @@
 
 //Definição dos pinos dos sensores de linha
 const int plsensorRight = 8;
-//const int plsensorLeft 
+const int plsensorLeft //Definir o pino
 bool sensorRight = 0;
-//bool sensorLeft
+bool sensorLeft = 0;
 
   //Definição dos pinos dos sensores de cor
   // Left
@@ -106,7 +106,7 @@ void setup() {
   setupEngine();
   setupSensors();
   pinMode(plsensorRight, INPUT);
-  //pinMode(plsensorLeft, INPUT);
+  pinMode(plsensorLeft, INPUT);
 }
 
 void loop() {
@@ -166,46 +166,56 @@ void checkObstacle() {
   // delay(100);
   // Serial.println(">>>>>");
   // Serial.println((String) "Dianteiro: " + sonarDianteiro.ping_cm());
-  // if (sonarDianteiro.ping_cm() <= 30 && sonarDianteiro.ping_cm() >= 1) {
-  //   engineOFF();
-  // }
-  // else if (checkSides()){
-  //   engineOFF(); //ajustar direcao
-  // }
-  //else {
+  if (sonarDianteiro.ping_cm() <= 30 && sonarDianteiro.ping_cm() >= 1) {
+    engineOFF();
+  }
+  else if (checkSides()){
+    engineOFF(); //ajustar direcao
+  }
+  else {
     // checkColor();
     //Armazena o valor lido pelos sensores
     sensorRight = digitalRead(plsensorRight);
-    //Sensor2 = digitalRead(pin_S2);
+    Sensor2 = digitalRead(pin_S2);
 
     if (direction == 'f') {
-      if(sensorRight == 0){
-        Serial.println("0");
-      }else{
-        Serial.println("1");
+      if(isSpin)
+      {
+        engineON(2, 3);
+        if ((Sensor1 == 0) && (Sensor2 == 1))
+        {
+          isSpin = false;
+        }
       }
-      // if ((Sensor1 == 0) && (Sensor2 == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
-      //   engineON(2, 2);
-      // }
-      // if ((Sensor1 == 1) && (Sensor2 == 0)) {  // Se detectar um lado preto e o outro branco
-      //   engineON(3, 2);
-      // }
-      // if ((Sensor1 == 0) && (Sensor2 == 1)) {  // Se detectar um lado branco e o outro preto
-      //   engineON(2, 3);
-      // }
-      // if((Sensor1 == 1) && (Sensor2 == 1)){ //Se os dois lados forem preto
-      //   platform();
-      // } 
+      if ((Sensor1 == 0) && (Sensor2 == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
+         engineON(2, 2);
+      }
+      if ((Sensor1 == 1) && (Sensor2 == 0)) {  // Se detectar um lado preto e o outro branco
+         engineON(3, 2);
+      }
+      if ((Sensor1 == 0) && (Sensor2 == 1)) {  // Se detectar um lado branco e o outro preto
+        engineON(2, 3);
+      }
+      if((Sensor1 == 1) && (Sensor2 == 1)){ //Se os dois lados forem preto
+        platform();
+      } 
     }
     else if (direction == 'b') {
-      //Girar
-
+      if ((Sensor1 == 0) && (Sensor2 == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
+         engineON(2, 2);
+      }
+      if ((Sensor1 == 1) && (Sensor2 == 0)) {  // Se detectar um lado preto e o outro branco
+         engineON(2, 3);
+      }
+      if ((Sensor1 == 0) && (Sensor2 == 1)) {  // Se detectar um lado branco e o outro preto
+        engineON(3, 2);
+      }
+      if((Sensor1 == 1) && (Sensor2 == 1)){ //Se os dois lados forem preto
+        platform();
+      } 
 
     }
   //}
-}
-void spin(){ //Girar o carrinho
-
 }
 void platform() {
   if (direction == 'f') {
@@ -219,6 +229,7 @@ void platform() {
     } else {
       isUp = false;
       direction = 'b';
+      isSpin = true;
     }
 
   } else if (direction == 'b') {
