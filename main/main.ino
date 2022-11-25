@@ -20,7 +20,7 @@
 
 //Definição dos pinos dos sensores de linha
 const int plsensorRight = 8;
-const int plsensorLeft //Definir o pino
+const int plsensorLeft = 15; //Definir o pino
 bool sensorRight = 0;
 bool sensorLeft = 0;
 
@@ -169,53 +169,53 @@ void checkObstacle() {
   if (sonarDianteiro.ping_cm() <= 30 && sonarDianteiro.ping_cm() >= 1) {
     engineOFF();
   }
-  else if (checkSides()){
-    engineOFF(); //ajustar direcao
-  }
+  //else if (checkSides()){
+  //  engineOFF(); //ajustar direcao
+  //}
   else {
     // checkColor();
     //Armazena o valor lido pelos sensores
     sensorRight = digitalRead(plsensorRight);
-    Sensor2 = digitalRead(pin_S2);
+    sensorLeft = digitalRead(plsensorLeft);
 
     if (direction == 'f') {
       if(isSpin)
       {
         engineON(2, 3);
-        if ((Sensor1 == 0) && (Sensor2 == 1))
+        if ((sensorRight == 0) && (sensorLeft == 1))
         {
           isSpin = false;
         }
       }
-      if ((Sensor1 == 0) && (Sensor2 == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
+      if ((sensorRight == 0) && (sensorLeft == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
          engineON(2, 2);
       }
-      if ((Sensor1 == 1) && (Sensor2 == 0)) {  // Se detectar um lado preto e o outro branco
+      if ((sensorRight == 1) && (sensorLeft == 0)) {  // Se detectar um lado preto e o outro branco
          engineON(3, 2);
       }
-      if ((Sensor1 == 0) && (Sensor2 == 1)) {  // Se detectar um lado branco e o outro preto
+      if ((sensorRight == 0) && (sensorLeft == 1)) {  // Se detectar um lado branco e o outro preto
         engineON(2, 3);
       }
-      if((Sensor1 == 1) && (Sensor2 == 1)){ //Se os dois lados forem preto
+      if((sensorRight == 1) && (sensorLeft == 1)){ //Se os dois lados forem preto
         platform();
       } 
     }
     else if (direction == 'b') {
-      if ((Sensor1 == 0) && (Sensor2 == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
+      if ((sensorRight == 0) && (sensorLeft == 0)) {  // Se detectar na extremidade das faixas duas cores brancas
          engineON(2, 2);
       }
-      if ((Sensor1 == 1) && (Sensor2 == 0)) {  // Se detectar um lado preto e o outro branco
+      if ((sensorRight == 1) && (sensorLeft == 0)) {  // Se detectar um lado preto e o outro branco
          engineON(2, 3);
       }
-      if ((Sensor1 == 0) && (Sensor2 == 1)) {  // Se detectar um lado branco e o outro preto
+      if ((sensorRight == 0) && (sensorLeft == 1)) {  // Se detectar um lado branco e o outro preto
         engineON(3, 2);
       }
-      if((Sensor1 == 1) && (Sensor2 == 1)){ //Se os dois lados forem preto
+      if((sensorRight == 1) && (sensorLeft == 1)){ //Se os dois lados forem preto
         platform();
       } 
 
     }
-  //}
+ }
 }
 void platform() {
   if (direction == 'f') {
