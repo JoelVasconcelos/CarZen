@@ -19,8 +19,8 @@
 #define Down 41
 
 //Definição dos pinos dos sensores de linha
-const int plsensorRight = 8;
-const int plsensorLeft = 15; //Definir o pino
+const int plsensorRight = 28;
+const int plsensorLeft = 29; //Definir o pino
 bool sensorRight = 0;
 bool sensorLeft = 0;
 
@@ -114,40 +114,40 @@ void loop() {
 }
 
 void checkColor() {
-  corVermelhoLeft = leitorVermelho(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
-  corVermelhoRight = leitorVermelho(sensorRightS2, sensorRightS3, sensorRightOUT);
+  // corVermelhoLeft = leitorVermelho(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
+  // corVermelhoRight = leitorVermelho(sensorRightS2, sensorRightS3, sensorRightOUT);
 
-  corVerdeLeft = leitorVerde(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
-  corVerdeRight = leitorVerde(sensorRightS2, sensorRightS3, sensorRightOUT);
+  // corVerdeLeft = leitorVerde(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
+  // corVerdeRight = leitorVerde(sensorRightS2, sensorRightS3, sensorRightOUT);
 
-  corAzulLeft = leitorAzul(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
-  corAzulRight = leitorAzul(sensorRightS2, sensorRightS3, sensorRightOUT);
+  // corAzulLeft = leitorAzul(sensorLeftS2, sensorLeftS3, sensorLeftOUT);
+  // corAzulRight = leitorAzul(sensorRightS2, sensorRightS3, sensorRightOUT);
 
-  if (!maneuver) {
-    engineON(2, 2);
-  }
+  // if (!maneuver) {
+  //   engineON(2, 2);
+  // }
 
-  if (corVermelhoLeft < 185 && corVerdeLeft < 185 && corAzulLeft < 145) {  // Se detectar o lado preto na esquerda e o lado branco na direita
+  // if (corVermelhoLeft < 185 && corVerdeLeft < 185 && corAzulLeft < 145) {  // Se detectar o lado preto na esquerda e o lado branco na direita
 
-    engineON(3, 2);
-  }
+  //   engineON(3, 2);
+  // }
 
-  if (corVermelhoRight < 185 && corVerdeRight < 185 && corAzulRight < 145) {  // Se detectar o lado branco na esquerda e o lado preto na direita
-    engineON(2, 3);
-  }
+  // if (corVermelhoRight < 185 && corVerdeRight < 185 && corAzulRight < 145) {  // Se detectar o lado branco na esquerda e o lado preto na direita
+  //   engineON(2, 3);
+  // }
 
-  if ((corVerdeLeft > corAzulLeft && corAzulLeft > corVermelhoLeft && corVermelhoLeft < 60) && (corVerdeRight > corAzulRight && corAzulRight > corVermelhoRight && corVermelhoRight < 60)) {  // Se detectar o vermelho nos dois sensores
-    engineOFF();
-    maneuver = true;
-    platform();
-  }
+  // if ((corVerdeLeft > corAzulLeft && corAzulLeft > corVermelhoLeft && corVermelhoLeft < 60) && (corVerdeRight > corAzulRight && corAzulRight > corVermelhoRight && corVermelhoRight < 60)) {  // Se detectar o vermelho nos dois sensores
+  //   engineOFF();
+  //   maneuver = true;
+  //   platform();
+  // }
 
-  if (maneuver) {
-    if (corVermelhoRight < 185 && corVerdeRight < 185 && corAzulRight < 145) {
-      maneuver = false;
-    }
-    engineON(3, 2);
-  }
+  // if (maneuver) {
+  //   if (corVermelhoRight < 185 && corVerdeRight < 185 && corAzulRight < 145) {
+  //     maneuver = false;
+  //   }
+  //   engineON(3, 2);
+  // }
 }
 
 // bool checkSides(){
